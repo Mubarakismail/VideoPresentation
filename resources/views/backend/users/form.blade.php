@@ -35,4 +35,18 @@
             @enderror
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
+            <label class="bmd-label-floating">Video Status</label>
+            <select name="group" class="form-control @error('group') is-invalid @enderror">
+                <option value="admin" {{isset($row)&&$row->published=='admin'?'selected':''}}>Admin</option>
+                <option value="user" {{isset($row)&&$row->published=='user'?'selected':''}}>User</option>
+            </select>
+        </div>
+        @error('group')
+        <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
 </div>

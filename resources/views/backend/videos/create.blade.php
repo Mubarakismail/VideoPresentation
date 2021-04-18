@@ -19,7 +19,7 @@
                     <p class="card-category">{{$pageDes}}</p>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('videos.store')}}" method="post">
+                    <form action="{{route('videos.store')}}" method="post" enctype="multipart/form-data">
                         @include('backend.videos.form')
                         <button type="submit" class="btn btn-primary pull-right">ADD {{$modulName}}</button>
                         <div class="clearfix"></div>

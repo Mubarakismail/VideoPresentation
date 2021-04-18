@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
+@section('title','Verify')
+
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
+    <div class="container" style="margin-top: 120px">
+        <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Verify Your Email Address') }}</div>
@@ -24,5 +26,5 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 @endsection

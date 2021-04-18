@@ -9,6 +9,7 @@ use App\Models\Skill;
 use App\Models\Tag;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class VideosController extends BackEndController
 {
@@ -45,30 +46,43 @@ class VideosController extends BackEndController
 
     public function store(Store $request){
 
-        $requestArray=$request->all()+['user_id'=> auth()->user()->id];
+        $file=$request->file('image');
+        $fileName=time().Str::random(10).'.'.$file->getClientOriginalExtension();
+        $file->move(public_path('uploads'),$fileName);
+
+        $requestArray=['user_id'=> auth()->user()->id,'image'=>$fileName]+$request->all();
         $row = $this->model->create($requestArray);
 
-        if(isset($requestArray['skill_id'])&&!empty($requestArray['skill_id'])) {
-            $row->skills()->sync($requestArray['skill_id']);
-        }
-        if(isset($requestArray['tag_id'])&&!empty($requestArray['tag_id'])) {
-            $row->tags()->sync($requestArray['tag_id']);
-        }
+        $this->syncSkillsTags($row,$requestArray);
 
         return redirect()->route('videos.index');
     }
     public function update($id,Store $request){
 
         $requestArray=$request->all();
+
+        if($request->hasFile('image'))
+        {
+            $file=$request->file('image');
+            $fileName=time().Str::random(10).'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('uploads'),$fileName);
+            $requestArray=['image'=>$fileName]+$requestArray;
+        }
+
         $row=$this->model->findOrFail($id);
         $row->update($requestArray);
+        $this->syncSkillsTags($row,$requestArray);
+
+        return redirect()->route('videos.index');
+    }
+
+    public function syncSkillsTags($row,$requestArray){
         if(isset($requestArray['skills'])&&!empty($requestArray['skills'])) {
             $row->skills()->sync($requestArray['skills']);
         }
         if(isset($requestArray['tags'])&&!empty($requestArray['tags'])) {
             $row->tags()->sync($requestArray['tags']);
         }
-
-        return redirect()->route('videos.index');
     }
+
 }

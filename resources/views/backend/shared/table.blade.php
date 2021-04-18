@@ -25,6 +25,9 @@
                                 Email
                             </th>
                             <th>
+                                Group
+                            </th>
+                            <th>
                                 Control
                             </th>
                         </tr>
@@ -35,6 +38,7 @@
                                 <td>{{$row->id}}</td>
                                 <td>{{$row->name}}</td>
                                 <td>{{$row->email}}</td>
+                                <td>{{$row->group}}</td>
                                 <td class="td-actions">
                                     <a href="{{route('users.edit',['user'=>$row->id])}}" rel="tooltip" title=""
                                        class="btn btn-white btn-link btn-sm"
@@ -65,4 +69,5 @@
             </div>
         </div>
     </div>
+
 </div>

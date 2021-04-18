@@ -37,9 +37,9 @@
         @enderror
     </div>
     <div class="col-md-6">
-        <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">Image url</label>
-            <input type="text" name="image" value="{{isset($row)?$row->image:''}}" class="form-control @error('image') is-invalid @enderror">
+        <div>
+            <label>Image</label>
+            <input type="file" name="image">
             @error('image')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
